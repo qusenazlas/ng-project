@@ -1,3 +1,27 @@
-<div>
-  <h1 class="text-3xl text-red-500">hi mom</h1>
+<div class="w-full mx-auto p-10 max-w-[500px]">
+  <h1 class="text-xl font-bold pb-2">todos:</h1>
+  <div class="flex items-center gap-2">
+    <input
+      placeholder="todo"
+      class="w-full h-10 text-sm border px-2 py-1"
+      [(ngModel)]="todoInput"
+    />
+    <button (click)="addTodo()" class="bg-emerald-400 p-2">add</button>
+  </div>
+
+  <div
+    *ngIf="todos.length > 0"
+    class="my-10 flex flex-col gap-2 h-[500px] overflow-hidden overflow-y-auto"
+  >
+    <li
+      *ngFor="let todo of todos"
+      class="w-full bg-blue-400 flex h-10 items-center p-2"
+    >
+      <span class="flex-1">{{ todo.title }} </span>
+      <div class="flex gap-1">
+        <button class="bg-red-400">delete</button>
+        <button class="bg-green-400">done</button>
+      </div>
+    </li>
+  </div>
 </div>
