@@ -13,15 +13,60 @@
     *ngIf="todos.length > 0"
     class="my-10 flex flex-col gap-2 h-[500px] overflow-hidden overflow-y-auto"
   >
-    <li
-      *ngFor="let todo of todos"
-      class="w-full bg-blue-400 flex h-10 items-center p-2"
-    >
-      <span class="flex-1">{{ todo.title }} </span>
-      <div class="flex gap-1">
-        <button class="bg-red-400">delete</button>
-        <button class="bg-green-400">done</button>
-      </div>
-    </li>
+    <div *ngFor="let todo of todos" class="h-10 w-full">
+      <li
+        class="w-full bg-blue-400 flex h-10 items-center p-2"
+        [ngStyle]="{ opacity: todo.done ? 0.5 : 1 }"
+      >
+        <span class="flex-1">{{ todo.title }} </span>
+        <div class="flex gap-1">
+          <button class="bg-red-400" (click)="deleteTodo(todo.id)">
+            delete
+          </button>
+          <button
+            class="bg-green-400"
+            [disabled]="todo.done"
+            (click)="makeTodoDone(todo.id)"
+          >
+            done
+          </button>
+          <button
+            class="bg-cyan-400"
+            [disabled]="todo.done"
+            (click)="editTodo(todo)"
+          >
+            edit
+          </button>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="openModal && selectedTodo !== null"
+  class="w-screen h-screen bg-slate-400/30 flex justify-center items-center fixed top-0 left-0"
+>
+  <div
+    class="w-[500px] h-[500px] rounded-lg bg-slate-900 p-2 flex flex-col justify-between"
+  >
+    <h1 class="text-white font-bold text-3xl text-center w-full">Edit todo</h1>
+    <input
+      class="bg-white px-2 py-1 w-full h-10 text-black text-sm"
+      [(ngModel)]="selectedTodo.title"
+    />
+    <div class="w-full flex gap-2 justify-center">
+      <button
+        class="p-2 text-base text-white bg-green-500"
+        (click)="saveTodo()"
+      >
+        Save
+      </button>
+      <button
+        class="p-2 text-base text-white bg-red-500"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
 </div>
