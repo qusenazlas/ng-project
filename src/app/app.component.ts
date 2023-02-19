@@ -29,7 +29,6 @@ export class AppComponent {
     const todosInLocalStorage = localStorage.getItem('todos');
     if (todosInLocalStorage) {
       const todosFormattedData = JSON.parse(todosInLocalStorage);
-      console.log({ todosFormattedData });
 
       this.todos = todosFormattedData;
     }
@@ -39,7 +38,6 @@ export class AppComponent {
     password: string,
     oldPassword: string
   ) {
-    console.log('ddddd');
     const res = await this.authService.changePassword(
       username,
       password,
@@ -50,7 +48,6 @@ export class AppComponent {
 
   async register(username: string, password: string) {
     const response = await this.authService.register(username, password);
-    console.log(response);
 
     this.apiResult = JSON.stringify(response.success);
   }
@@ -61,10 +58,10 @@ export class AppComponent {
   }
 
   async logout() {
-    const respose = await this.authService.logout();
-    console.log({ respose });
-
-    this.isUserLogIn = this.authService.checkUserIsLoggedIn();
+    const response = await this.authService.logout();
+    if (response?.success) {
+      this.isUserLogIn = this.authService.checkUserIsLoggedIn();
+    }
   }
 
   async ngOnInit() {

@@ -41,7 +41,6 @@ export default class Auth {
 
   async logout() {
     const token = this.tokenService.getToken();
-    console.log(token);
 
     const response = await axios.post(
       'https://learn-backend-production-7c08.up.railway.app/logout',
@@ -52,6 +51,7 @@ export default class Auth {
         },
       }
     );
+    this.tokenService.deleteToken();
 
     return response.data;
   }

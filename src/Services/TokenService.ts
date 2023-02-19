@@ -12,4 +12,8 @@ export default class TokenService {
   setToken(val: string) {
     this.localStorageInstance.setItem('accessToken', val);
   }
+
+  deleteToken() {
+    this.localStorageInstance.removeItem('accessToken');
+  }
 }

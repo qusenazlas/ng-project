@@ -2,13 +2,16 @@
   <div class="flex flex-col gap-1 p-2">
     <label for="userName">UserName: </label>
     <input type="text" class="border" [(ngModel)]="username" />
-    <label for="password">Old Password: </label>
+
+    <label for="password" *ngIf="isUserLogIn">Old Password: </label>
     <input
+      *ngIf="isUserLogIn"
       type="password"
       class="border"
       name="old-pass"
       [(ngModel)]="oldPassword"
     />
+
     <label for="password">Password: </label>
     <input type="password" class="border" [(ngModel)]="password" />
 
