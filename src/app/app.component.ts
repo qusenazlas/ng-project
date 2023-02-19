@@ -23,6 +23,7 @@ export class AppComponent {
   username: string = '';
   password: string = '';
   apiResult: string = '';
+  oldPassword: string = '';
 
   getTodos() {
     const todosInLocalStorage = localStorage.getItem('todos');
@@ -32,6 +33,19 @@ export class AppComponent {
 
       this.todos = todosFormattedData;
     }
+  }
+  async changePassword(
+    username: string,
+    password: string,
+    oldPassword: string
+  ) {
+    console.log('ddddd');
+    const res = await this.authService.changePassword(
+      username,
+      password,
+      oldPassword
+    );
+    console.log(res);
   }
 
   async register(username: string, password: string) {
@@ -45,6 +59,7 @@ export class AppComponent {
     await this.authService.login(username, password);
     this.isUserLogIn = this.authService.checkUserIsLoggedIn();
   }
+
   async logout() {
     const respose = await this.authService.logout();
     console.log({ respose });

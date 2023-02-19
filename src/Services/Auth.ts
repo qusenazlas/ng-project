@@ -20,13 +20,32 @@ export default class Auth {
     return response.data;
   }
 
+  async changePassword(
+    username: string,
+    password: string,
+    oldPassword: string
+  ) {
+    const token = this.tokenService.getToken();
+    const response = await axios.patch(
+      'https://learn-backend-production-7c08.up.railway.app/user/change-password',
+      { username: username, password: password, oldPassword: oldPassword },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  }
+
   async logout() {
     const token = this.tokenService.getToken();
     console.log(token);
 
     const response = await axios.post(
       'https://learn-backend-production-7c08.up.railway.app/logout',
-      null,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
