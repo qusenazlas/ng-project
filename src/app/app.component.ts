@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Auth from 'src/Services/Auth';
 
 type Todo = {
   id: number;
@@ -16,6 +17,12 @@ export class AppComponent {
   todos: Todo[] = [];
   openModal: boolean = false;
   selectedTodo: Todo | null = null;
+  isUserLogIn: boolean = false;
+  //instance
+  authService: Auth = new Auth();
+  username: string = '';
+  password: string = '';
+  apiResult: string = '';
 
   getTodos() {
     const todosInLocalStorage = localStorage.getItem('todos');
@@ -27,8 +34,27 @@ export class AppComponent {
     }
   }
 
-  ngOnInit() {
+  async register(username: string, password: string) {
+    const response = await this.authService.register(username, password);
+    console.log(response);
+
+    this.apiResult = JSON.stringify(response.success);
+  }
+
+  async login(username: string, password: string) {
+    await this.authService.login(username, password);
+    this.isUserLogIn = this.authService.checkUserIsLoggedIn();
+  }
+  async logout() {
+    const respose = await this.authService.logout();
+    console.log({ respose });
+
+    this.isUserLogIn = this.authService.checkUserIsLoggedIn();
+  }
+
+  async ngOnInit() {
     this.getTodos();
+    this.isUserLogIn = this.authService.checkUserIsLoggedIn();
   }
 
   storeTodos(todo: Todo) {
